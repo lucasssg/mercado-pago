@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Integracao</title>  
+  <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+</head>
+<body onload="nome()">
+  <form action="http://localhost:3000/process_payment" method="post" id="pay" name="pay" >
+    <fieldset>
+        <ul>
+            <li>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="julio_thomazelli-ju1@estudante.sc.senai.br"/>
+            </li>
+            <li>
+                <label for="cardNumber">Credit card number:</label>
+                <input type="text" id="cardNumber" data-checkout="cardNumber" value="5117810763470748" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+            </li>
+            <li>
+                <label for="securityCode">Security code:</label>
+                <input type="text" id="securityCode" data-checkout="securityCode" value="999" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+            </li>
+            <li>
+                <label for="cardExpirationMonth">Expiration month:</label>
+                <input type="text" id="cardExpirationMonth" data-checkout="cardExpirationMonth" value="10" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+            </li>
+            <li>
+                <label for="cardExpirationYear">Expiration year:</label>
+                <input type="text" id="cardExpirationYear" data-checkout="cardExpirationYear" value="2023" onselectstart="return false" onpaste="return false" onCopy="return false" onCut="return false" onDrag="return false" onDrop="return false" autocomplete=off />
+            </li>
+            <li>
+                <label for="cardholderName">Card holder name:</label>
+                <input type="text" id="cardholderName" data-checkout="cardholderName" value="MARCIO H. MEIER" />
+            </li>
+            <li>
+                <label for="docType">Document type:</label>
+                <input id="docType" data-checkout="docType" value="CPF" readonly></input>
+            </li>
+            <li>
+                <label for="docNumber">Document number:</label>
+                <input type="text" id="docNumber" data-checkout="docNumber" value="09673163956"/>
+            </li>
+            <li>
+               <label for="installments">Installments:</label>
+               <input id="installments" class="form-control" name="installments" value="2" readonly></input>
+          </li>
+        </ul>
+        <input type="hidden" name="amount" id="amount"/>
+        <input type="hidden" name="description"/>
+        <input type="hidden" name="paymentMethodId" />
+        <input type="submit" value="Pay!" />
+    </fieldset>
+</form>
+</body>
+<script src="./integration.js"></script>
+</html>
