@@ -61,7 +61,6 @@ if (status == 200) {
 };
 
 function doPay(event){
-    debugger;    
     event.preventDefault();
     if(!doSubmit){
         var $form = document.querySelector('#pay');
@@ -86,7 +85,7 @@ function sdkResponseHandler(status, response) {
         card.setAttribute('value', response.id);
         form.appendChild(card);
         doSubmit=true;
-        //form.submit();
+        form.submit();
     }
 };
 
