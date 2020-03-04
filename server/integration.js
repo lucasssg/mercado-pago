@@ -14,16 +14,17 @@ app.post('/process_payment', function(req, res) {
     var accessToken = 'TEST-8366708351268140-021822-c697a579520a3486f1901b5076f11849-528446352';
 
     var data = req.body;
+    console.log("data", data)
     var token = data.token;    
 
     mercadopago.configurations.setAccessToken(accessToken);
 
     var payment_data = {
-        transaction_amount: parseInt(data.amount[0]),
+        transaction_amount: parseInt(data.amount),
         token: token,
-        description: data.description[0],
+        description: data.description,
         installments: parseInt(data.installments),
-        payment_method_id: data.paymentMethodId[0],
+        payment_method_id: data.paymentMethodId,
         payer: {
           email: data.email
         }
@@ -36,6 +37,12 @@ app.post('/process_payment', function(req, res) {
         return res.send(data.body);
       }).catch(function (error){
         console.log("error", error)
+
+        if(error && error.message == "Invalid card token"){
+          var messageError = 'Cartão Inválido';
+          return res.send({Error: messageError});
+        }
+
         return res.send({Error: error});
       });    
 });
