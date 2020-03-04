@@ -32,9 +32,10 @@ app.post('/process_payment', function(req, res) {
       console.log(payment_data);
 
       mercadopago.payment.save(payment_data).then(function (data){
-      console.log("data", data)
+       console.log("data", data)
         return res.send(data.body);
       }).catch(function (error){
+        console.log("error", error)
         return res.send({Error: error});
       });    
 });
