@@ -12,10 +12,8 @@ class Integration extends React.Component {
     this.doPay = this.doPay.bind(this);
     this.sdkResponseHandler = this.sdkResponseHandler.bind(this);
     this.onLoad = this.onLoad.bind(this);
+    this.doSubmit = false;
 
-    this.state = {
-      doSumit: false,
-    };
   }
 
   componentDidMount(){
@@ -84,7 +82,7 @@ class Integration extends React.Component {
 
   doPay(event) {
     event.preventDefault();
-    if (!this.state.doSubmit) {
+    if (!this.doSubmit) {
       var $form = document.querySelector('#pay');
 
       console.log('form', $form)
@@ -106,7 +104,7 @@ class Integration extends React.Component {
       card.setAttribute('type', 'hidden');
       card.setAttribute('value', response.id);
       form.appendChild(card);
-      this.setState({ doSubmit: true })
+      this.doSubmit = true;
       form.submit();
     }
   };
@@ -118,7 +116,7 @@ class Integration extends React.Component {
     this.addEvent(document.querySelector('#cardNumber'), 'keyup', this.guessingPaymentMethod);
     this.addEvent(document.querySelector('#cardNumber'), 'change', this.guessingPaymentMethod);
 
-    window.Mercadopago.setPublishableKey("TEST-fd28ab2f-f254-4525-8849-56e1a625fd4e");
+    window.Mercadopago.setPublishableKey("TEST-138e593a-f5ea-418a-ad78-2c45c1748e19");
   }
 
   render() {
@@ -127,7 +125,8 @@ class Integration extends React.Component {
         <h2 style={{textAlign:"center",marginTop:20}}>DADOS DO CARTÃO DE CRÉDITO</h2>
         <form style={{padding:10}} action="http://localhost:3000/process_payment" method="post" id="pay" name="pay" >
           <div style={{display:"flex"}}>
-            <TextField 
+            <TextField
+              data-checkout="cardholderName"           
               id="cardholderName"
               label="Nome do Cartão"
               lineDirection="center"
@@ -135,7 +134,8 @@ class Integration extends React.Component {
               className="md-cell md-cell--6 md-cell--bottom"
               value="MARCIO H. MEIER"
             />
-            <TextField 
+            <TextField
+              data-checkout="cardNumber" 
               id="cardNumber"
               label="Número do Cartão"
               lineDirection="center"
@@ -145,7 +145,8 @@ class Integration extends React.Component {
             />
           </div>
           <div style={{display:"flex"}}>
-            <TextField 
+            <TextField
+              data-checkout="cardExpirationMonth" 
               id="cardExpirationMonth"
               label="Mês Vencimento"
               lineDirection="center"
@@ -153,7 +154,8 @@ class Integration extends React.Component {
               className="md-cell md-cell--6 md-cell--bottom"
               value="10"
             />
-            <TextField 
+            <TextField
+              data-checkout="cardExpirationYear" 
               id="cardExpirationYear"
               label="Ano Vencimento"
               lineDirection="center"
@@ -163,7 +165,8 @@ class Integration extends React.Component {
             />
           </div>
           <div style={{display:"flex"}}>
-            <TextField 
+            <TextField
+              data-checkout="securityCode" 
               id="securityCode"
               label="Código Segurança"
               lineDirection="center"
@@ -171,7 +174,8 @@ class Integration extends React.Component {
               className="md-cell md-cell--6 md-cell--bottom"
               value="999"
             />
-            <TextField 
+            <TextField
+              data-checkout="paymentMethodId" 
               id="paymentMethodId"
               name="paymentMethodId"
               label="Bandeira"
@@ -182,15 +186,17 @@ class Integration extends React.Component {
             />
           </div>
           <div style={{display:"flex"}}>
-            <TextField 
-                id="docType"
-                label="Tipo Documento"
-                lineDirection="center"
-                placeholder="CPF"
-                className="md-cell md-cell--6 md-cell--bottom"
-                value="CPF"
+            <TextField
+              data-checkout="docType" 
+              id="docType"
+              label="Tipo Documento"
+              lineDirection="center"
+              placeholder="CPF"
+              className="md-cell md-cell--6 md-cell--bottom"
+              value="CPF"
             />
-            <TextField 
+            <TextField
+              data-checkout="docNumber" 
               id="docNumber"
               label="Número Documento"
               lineDirection="center"
@@ -200,7 +206,8 @@ class Integration extends React.Component {
             />
           </div>
           <div style={{display:"flex"}}>
-            <TextField 
+            <TextField
+              data-checkout="description" 
               id="description"
               name="description"
               label="Descrição da Compra"
@@ -209,7 +216,8 @@ class Integration extends React.Component {
               className="md-cell md-cell--6 md-cell--bottom"
               value="Jogo de Calota Renault Clio Aro 15"
             />
-            <TextField 
+            <TextField
+              data-checkout="amount" 
               id="amount"
               name="amount"
               label="Valor da Compra"
@@ -220,7 +228,8 @@ class Integration extends React.Component {
             />
           </div>
           <div style={{display:"flex"}}>
-            <TextField 
+            <TextField
+              data-checkout="installments" 
               id="installments"
               name="installments"
               label="Qtde. Parcelas"
@@ -229,7 +238,8 @@ class Integration extends React.Component {
               className="md-cell md-cell--6 md-cell--bottom"
               value="2"
             />
-            <TextField 
+            <TextField
+              data-checkout="" 
               id="email"
               name="email"
               label="Email"
