@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post('/process_payment', function(req, res) {
-    var accessToken = 'TEST-8366708351268140-021822-c697a579520a3486f1901b5076f11849-528446352';
+    var accessToken = 'TEST-8366708351268140-030423-14c3102e1ff2363c370a7eed22724bd1-528446352';
 
     var data = req.body;
     console.log("data", data)
@@ -33,13 +33,19 @@ app.post('/process_payment', function(req, res) {
       console.log(payment_data);
 
       mercadopago.payment.save(payment_data).then(function (data){
-       console.log("data", data)
-        return res.send(data.body);
+        console.log("data", data)
+      
+        var data = data.body;
+
+        if(data && data.id && data.status == "approved"){
+          return res.send({Message: "Compra efetuada com sucesso!"});
+        }
+        else return res.send({Message: "Compra Rejeitada!"});
       }).catch(function (error){
         console.log("error", error)
 
         if(error && error.message == "Invalid card token"){
-          var messageError = 'Cartão Inválido';
+          var messageError = 'Compra não finalizada! Algo deu errado';
           return res.send({Error: messageError});
         }
 
